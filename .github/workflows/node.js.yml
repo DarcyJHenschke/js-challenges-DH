@@ -1,33 +1,27 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+name: Node CI
 
-name: Node.js CI
-
-on:
-    pull_request:
-        branches: ["master"]
-
-    push:
-        branches: ["master"]
+on: [push]
 
 jobs:
-    angular-test-coverage:
+    build_and_test:
         runs-on: ubuntu-latest
-        name: angular test coverage update
         steps:
-            - name: Checkout
-              uses: actions/checkout@v2
-
-            - name: Run Jasmine tests
-              run: npm test js1
-
-            - name: Coverage report
-              uses: eleboys/test-coverage-report-action@v1.0.2
-              id: report
+            - name: Checkout repository
+              uses: actions/checkout@v3
+            - name: npm install, build, and test
+              run: |
+                  npm install
+                  npm run build --if-present
+                  npm test
+            - name: Archive production artifacts
+              uses: actions/upload-artifact@v3
               with:
-                  token: ${{ secrets.GITHUB_TOKEN }}
-                  path: coverage/coverage-summary.json
-                  title: Karma Test Coverage
-
-            - name: Print the output summary
-              run: echo "Report coverage json ${{ steps.report.outputs.summary }}"
+                  name: dist-without-markdown
+                  path: |
+                      dist
+                      !dist/**/*.md
+            - name: Archive code coverage results
+              uses: actions/upload-artifact@v3
+              with:
+                  name: code-coverage-report
+                  path: output/test/code-coverage.html
