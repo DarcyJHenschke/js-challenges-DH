@@ -12,7 +12,7 @@
     },
     "scripts": {
         "test-coverage": "jest ./src/js11-unit-testing/challenge.test.js --watch --coverage",
-        "test": "jest",
+        "test": "jest --ci --testResultsProcessor=jest-junit",
         "test-watch": "jest --watch"
     },
     "contributors": [
