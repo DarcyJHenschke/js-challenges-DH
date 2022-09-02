@@ -163,7 +163,7 @@ export const convertPascalCaseToSnakeCase = () => {
     const splitWords = pascalCaseVariableName.split(/(?=[A-Z])/);
     const joinedWordsWithUnderscores = splitWords.join("_");
     const snakeCase = joinedWordsWithUnderscores.toLowerCase();
-
+    // ss
     return snakeCase;
 };
 
