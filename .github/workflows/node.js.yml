@@ -19,7 +19,7 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Run Jasmine tests
-              run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadlessCI
+              run: npm run test
 
             - name: Coverage report
               uses: eleboys/test-coverage-report-action@v1.0.2
